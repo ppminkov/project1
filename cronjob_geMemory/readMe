@@ -1,0 +1,10 @@
+paste the ps_mem.py in /root folder
+Make it executable:
+chmod +x /root/ps_mem.py
+
+create cron job by:
+crontab -e
+in vi editor paste:
+*/2 * * * * source /etc/profile; (date; echo; /root/./ps_mem.py -s -S 2>&1) >> /var/log/ps_mem.log
+
+

@@ -1,0 +1,1 @@
+reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\KeyExchangeAlgorithms\pkcs" /v "clientminkeybitlength" /t REG_DWORD /d "0x00000800" /f

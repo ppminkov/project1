@@ -1,0 +1,25 @@
+#!/bin/sh
+
+echo 'Start updating firewall rules specific to vIDM...'
+
+# Ensure port 40002 is accessible from nodes in cluster
+for node in $(cat /etc/cluster-nodes); do
+    iptables -D INPUT -p tcp --dport 40002 -s ${node} -j ACCEPT
+    iptables -A INPUT -p tcp --dport 40002 -s ${node} -j ACCEPT
+    iptables -D INPUT -p tcp --dport 40003 -s ${node} -j ACCEPT
+    iptables -A INPUT -p tcp --dport 40003 -s ${node} -j ACCEPT    
+done
+
+# Ensure port 40002 is accessible from localhost
+iptables -D INPUT -p tcp --dport 40002 -s 127.0.0.0/8 -j ACCEPT
+iptables -A INPUT -p tcp --dport 40002 -s 127.0.0.0/8 -j ACCEPT
+iptables -D INPUT -p tcp --dport 40003 -s 127.0.0.0/8 -j ACCEPT
+iptables -A INPUT -p tcp --dport 40003 -s 127.0.0.0/8 -j ACCEPT
+
+# Ensure port 40002 is disabled for external access
+iptables -D INPUT -p tcp --dport 40002 -j REJECT
+iptables -A INPUT -p tcp --dport 40002 -j REJECT
+iptables -D INPUT -p tcp --dport 40003 -j REJECT
+iptables -A INPUT -p tcp --dport 40003 -j REJECT
+
+exit 0
