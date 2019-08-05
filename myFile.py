@@ -1,1 +1,0 @@
-filepath = '/etc/passwd'default_users = [bin, daemon, haldaemon, mail, man, messagebus, nobody,
